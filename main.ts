@@ -7,6 +7,7 @@ interface CodeBlockPluginSettings {
 }
 
 function getDefaultLanguages() {
+
 	return hljs.listLanguages();
 }
 
