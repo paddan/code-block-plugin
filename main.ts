@@ -1,4 +1,4 @@
-import { App, Editor, Plugin, PluginSettingTab, Setting } from 'obsidian';
+import {App, Editor, Plugin, PluginSettingTab, Setting} from 'obsidian';
 
 const hljs = require('highlight.js/lib/common');
 
@@ -6,13 +6,8 @@ interface CodeBlockPluginSettings {
 	languages: string[];
 }
 
-function getDefaultLanguages() {
-
-	return hljs.listLanguages();
-}
-
 const DEFAULT_SETTINGS: CodeBlockPluginSettings = {
-	languages: getDefaultLanguages()
+	languages: hljs.listLanguages()
 }
 
 export default class CodeBlockPlugin extends Plugin {
