@@ -29,7 +29,9 @@ jobs:
             - name: Attest build provenance
               uses: actions/attest@v4
               with:
-                  subject-path: main.js
+                  subject-path: |
+                      main.js
+                      manifest.json
 
             - name: Create release
               env:
@@ -39,5 +41,5 @@ jobs:
 
                   gh release create "$tag" \
                     --title="$tag" \
-                    --draft \
+                    --generate-notes \
                     main.js manifest.json

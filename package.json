@@ -1,6 +1,6 @@
 {
 	"name": "code-block-plugin",
-	"version": "1.0.4",
+	"version": "1.0.5",
 	"description": "This plugin converts selected text into code blocks with automatic language detection.",
 	"main": "main.js",
 	"type": "module",
