@@ -1,4 +1,5 @@
 import { App, PluginSettingTab, Setting } from 'obsidian';
+import type { SettingDefinitionItem } from 'obsidian';
 import hljs from './highlighter.ts';
 import type CodeBlockPlugin from './main';
 import { toggleLanguage } from './codeblock';
@@ -21,7 +22,39 @@ export class CodeBlockTab extends PluginSettingTab {
 		this.plugin = plugin;
 	}
 
+	getSettingDefinitions(): SettingDefinitionItem[] {
+		return [{
+			type: 'group',
+			heading: 'Active programming languages',
+			search: {
+				placeholder: 'Filter languages…',
+				match: (def, query) => def.name.toLowerCase().includes(query.toLowerCase()),
+			},
+			items: hljs.listLanguages().sort().map((language) => ({
+				name: language,
+				control: {
+					type: 'toggle' as const,
+					key: language,
+				},
+			})),
+		}];
+	}
+
+	getControlValue(key: string): unknown {
+		return this.plugin.settings.languages.includes(key);
+	}
+
+	setControlValue(key: string, value: unknown): void {
+		this.plugin.settings.languages = toggleLanguage(
+			this.plugin.settings.languages,
+			key,
+			value as boolean,
+		);
+		void this.plugin.saveSettings();
+	}
+
 	display(): void {
+		// Legacy fallback for Obsidian < 1.13.0
 		const { containerEl } = this;
 		containerEl.empty();
 
