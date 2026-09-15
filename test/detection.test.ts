@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import hljs from 'highlight.js/lib/common';
+import hljs from '../src/highlighter.ts';
 import { languageSamples } from './language-samples.ts';
 import { detectLanguage } from '../src/detection.ts';
 
@@ -26,6 +26,9 @@ for (const [label, code, expected] of [
 	['JSON scalar is ambiguous', 'true', ''],
 	['Java import', 'import java.time.Instant;\nclass Clock { Instant now() { return Instant.now(); } }', 'java'],
 	['GraphQL mutation', 'mutation AddItem($name: String!) { addItem(name: $name) { id } }', 'graphql'],
+	['short Cypher MATCH', 'MATCH (n) RETURN n', 'cypher'],
+	['Cypher MERGE', 'MERGE (p:Person {name: $name})\nON CREATE SET p.createdAt = datetime()\nRETURN p', 'cypher'],
+	['Cypher procedure call', 'CALL db.labels() YIELD label\nRETURN label ORDER BY label', 'cypher'],
 	['R assignment', 'scores <- c(5, 10, 15)\nsummary(scores)', 'r'],
 	['VB declaration', 'Public Function DoubleValue(x As Integer) As Integer\n  Return x * 2\nEnd Function', 'vbnet'],
 	['SQL select', 'select name from accounts where enabled = true;', 'sql'],
@@ -55,6 +58,7 @@ await test('respects an empty language selection', () => {
 await test('does not override disabled languages with a syntax hint', () => {
 	assert.equal(detectLanguage('{"name":"Ada"}', ['python']), '');
 	assert.equal(detectLanguage('#!/bin/bash\necho hello', ['python']), '');
+	assert.equal(detectLanguage('MATCH (n:Person) RETURN n', ['sql', 'vbnet']), '');
 });
 
 await test('shared syntax does not block the sole enabled language', () => {

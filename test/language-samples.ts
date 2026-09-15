@@ -5,6 +5,7 @@ export const languageSamples: Record<string, string> = {
 	c: '#include <stdio.h>\n#include <stdlib.h>\nint main(void) {\n  printf("Hello\\n");\n  return EXIT_SUCCESS;\n}',
 	cpp: '#include <iostream>\n#include <vector>\nint main() {\n  std::vector<int> values{1, 2, 3};\n  for (const auto& value : values) std::cout << value << std::endl;\n}',
 	csharp: 'using System;\nnamespace Example {\n  public class Program {\n    public static void Main(string[] args) {\n      Console.WriteLine("Hello");\n    }\n  }\n}',
+	cypher: 'MATCH (person:Person)-[:KNOWS]->(friend)\nWHERE person.name = "Patrik"\nRETURN friend.name ORDER BY friend.name',
 	css: '.card {\n  display: flex;\n  padding: 12px;\n  background-color: #fff;\n}\n.card:hover { color: red; }',
 	markdown: '# Release notes\n\nThis is **important** and *useful*.\n\n- First item\n- Second item\n\n[Documentation](https://example.com)',
 	diff: 'diff --git a/file.txt b/file.txt\n--- a/file.txt\n+++ b/file.txt\n@@ -1,2 +1,2 @@\n-old value\n+new value\n unchanged',

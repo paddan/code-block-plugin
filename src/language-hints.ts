@@ -26,6 +26,9 @@ export function languageHint(text: string): string | undefined {
 	if (/^(?:export\s+)?(?:const|let)\s+[$\w]+\s*=\s*(?:true|false|\d+|"[^"\n]*"|'[^'\n]*');?$/.test(text)) return 'javascript';
 	if (/^\s*import\s+(?:static\s+)?(?:java|javax)\.[\w.*]+;/m.test(text)) return 'java';
 	if (/^\s*(?:query|mutation|subscription)\s+[A-Za-z_]\w*\s*(?:\([^\n]*\))?\s*\{/.test(text)) return 'graphql';
+	// MATCH is shared with SQL-related syntax. A node pattern followed by a
+	// Cypher clause is specific enough to resolve highlight.js score ties.
+	if (/^\s*(?:OPTIONAL\s+)?MATCH\s+\([^\n)]*\)[\s\S]*\b(?:RETURN|WHERE|WITH)\b/i.test(text)) return 'cypher';
 	if (/^\s*(?:Public |Private |Protected )?(?:Sub|Function|Module)\s+\w+/mi.test(text)
 		&& /^\s*End (?:Sub|Function|Module)\b/mi.test(text)) return 'vbnet';
 	// Go uses <- too; require an R-shaped opening, not an arbitrary line

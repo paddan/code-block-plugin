@@ -1,4 +1,4 @@
-import hljs from 'highlight.js/lib/common';
+import hljs from './highlighter.ts';
 import { languageHint } from './language-hints.ts';
 
 const registeredLanguages = hljs.listLanguages();

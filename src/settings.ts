@@ -1,14 +1,16 @@
 import { App, PluginSettingTab, Setting } from 'obsidian';
-import hljs from 'highlight.js/lib/common';
+import hljs from './highlighter.ts';
 import type CodeBlockPlugin from './main';
 import { toggleLanguage } from './codeblock';
 
 export interface CodeBlockPluginSettings {
 	languages: string[];
+	settingsVersion: number;
 }
 
 export const DEFAULT_SETTINGS: CodeBlockPluginSettings = {
 	languages: hljs.listLanguages(),
+	settingsVersion: 1,
 };
 
 export class CodeBlockTab extends PluginSettingTab {

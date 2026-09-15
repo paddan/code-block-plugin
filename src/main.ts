@@ -1,6 +1,7 @@
 import { Editor, Notice, Plugin } from 'obsidian';
 import { detectLanguage } from './detection';
 import { addCodeBlock } from './codeblock';
+import { migrateLanguageSettings } from './settings-data';
 import { CodeBlockPluginSettings, CodeBlockTab, DEFAULT_SETTINGS } from './settings';
 
 export default class CodeBlockPlugin extends Plugin {
@@ -42,7 +43,14 @@ export default class CodeBlockPlugin extends Plugin {
 	}
 
 	async loadSettings() {
-		this.settings = Object.assign({}, DEFAULT_SETTINGS, await this.loadData() as Partial<CodeBlockPluginSettings> | null);
+		const saved = await this.loadData() as Partial<CodeBlockPluginSettings> | null;
+		const settings = Object.assign({}, DEFAULT_SETTINGS, saved);
+		const migration = migrateLanguageSettings(settings.languages, saved?.settingsVersion);
+		this.settings = {
+			languages: migration.languages,
+			settingsVersion: migration.settingsVersion,
+		};
+		if (migration.migrated) await this.saveSettings();
 	}
 
 	async saveSettings() {

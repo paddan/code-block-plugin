@@ -1,6 +1,6 @@
 {
 	"name": "code-block-plugin",
-	"version": "1.0.5",
+	"version": "1.0.6",
 	"description": "This plugin converts selected text into code blocks with automatic language detection.",
 	"main": "main.js",
 	"type": "module",
@@ -22,6 +22,7 @@
 		"eslint-plugin-obsidianmd": "^0.4.2",
 		"globals": "^17.6.0",
 		"highlight.js": "^11.12.0",
+		"highlightjs-cypher": "^1.2.0",
 		"jiti": "^2.6.1",
 		"obsidian": "1.13.1",
 		"typescript": "^5.9.3",
